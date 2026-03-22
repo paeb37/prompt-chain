@@ -14,7 +14,7 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "Prompt Chain Tool",
+  title: "Prompt Tool",
   description: "Manage Humor Flavors and Steps",
 };
 

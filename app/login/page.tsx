@@ -26,7 +26,7 @@ export default function LoginPage() {
             </div>
           </div>
           <h1 style={{ fontSize: '1.8rem', fontWeight: 700, color: '#f4f4f5', marginBottom: '0.5rem' }}>
-            Prompt Chain Tool
+            Prompt Tool
           </h1>
           <p style={{ color: '#a1a1aa', fontSize: '0.95rem', marginBottom: '2rem' }}>
             Please sign in to continue.

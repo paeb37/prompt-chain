@@ -1,7 +1,6 @@
 import { requireAdmin } from '@/utils/auth';
 import Link from 'next/link';
 import SignOutButton from '@/components/SignOutButton';
-import { ThemeToggle } from '@/components/ThemeToggle';
 import { Layers, Workflow, TestTube2, MessageSquare } from 'lucide-react';
 
 export default async function Dashboard() {
@@ -18,11 +17,10 @@ export default async function Dashboard() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <Workflow style={{ width: 28, height: 28 }} />
             <h1 style={{ fontSize: '1.4rem', fontWeight: 700, color: '#fff', margin: 0 }}>
-              Prompt Chain Tool
+              Prompt Tool
             </h1>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <ThemeToggle />
             <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>
               {user.email}
             </span>
@@ -36,129 +34,137 @@ export default async function Dashboard() {
           Manage Humor Flavors and Generation Pipelines
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
-          {/* Flavor Management */}
+        {/* Humor Flavors — wide horizontal card */}
+        <Link href="/flavors" style={{ textDecoration: 'none' }}>
           <div style={{
             background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.08)',
+            border: '1px solid rgba(168, 85, 247, 0.25)',
             borderRadius: '16px',
-            padding: '1.5rem',
+            padding: '2rem',
+            marginBottom: '1.5rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2rem',
             transition: 'all 0.2s',
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-              <div style={{
-                padding: '0.6rem',
-                background: 'rgba(168, 85, 247, 0.1)',
-                border: '1px solid rgba(168, 85, 247, 0.3)',
-                borderRadius: '10px',
-                color: '#a855f7',
-              }}>
-                <Layers style={{ width: 20, height: 20 }} />
-              </div>
-              <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#f4f4f5', margin: 0 }}>Humor Flavors</h2>
+            <div style={{
+              padding: '1rem',
+              background: 'rgba(168, 85, 247, 0.1)',
+              border: '1px solid rgba(168, 85, 247, 0.3)',
+              borderRadius: '14px',
+              color: '#a855f7',
+              flexShrink: 0,
+            }}>
+              <Layers style={{ width: 28, height: 28 }} />
             </div>
-            <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1.25rem', lineHeight: 1.5 }}>
-              Define the core styles of humor. These act as the parent containers for prompt steps.
-            </p>
-            <Link
-              href="/flavors"
-              style={{
-                display: 'block',
-                textAlign: 'center',
-                background: 'linear-gradient(135deg, #a855f7, #ec4899)',
-                color: '#fff',
-                padding: '0.75rem',
-                borderRadius: '10px',
-                fontWeight: 600,
-                fontSize: '0.9rem',
-                textDecoration: 'none',
-              }}
-            >
-              Manage Flavors
-            </Link>
+            <div style={{ flex: 1 }}>
+              <h2 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#f4f4f5', margin: '0 0 0.35rem 0' }}>Humor Flavors</h2>
+              <p style={{ color: '#a1a1aa', fontSize: '0.85rem', margin: 0, lineHeight: 1.5 }}>
+                Create and manage your humor styles and prompt steps.
+              </p>
+            </div>
+            <span style={{
+              background: 'linear-gradient(135deg, #a855f7, #7c3aed)',
+              color: '#fff',
+              padding: '0.6rem 1.5rem',
+              borderRadius: '10px',
+              fontWeight: 600,
+              fontSize: '0.9rem',
+              flexShrink: 0,
+            }}>
+              Open
+            </span>
           </div>
+        </Link>
 
-          {/* Testing Tool */}
-          <div style={{
-            background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            borderRadius: '16px',
-            padding: '1.5rem',
-            transition: 'all 0.2s',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+        {/* Bottom row — two cards side by side */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+
+          {/* Pipeline Tester — icon-top centered card */}
+          <Link href="/test-pipeline" style={{ textDecoration: 'none' }}>
+            <div style={{
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(56, 189, 248, 0.25)',
+              borderRadius: '16px',
+              padding: '2rem',
+              textAlign: 'center',
+              transition: 'all 0.2s',
+              height: '100%',
+            }}>
               <div style={{
-                padding: '0.6rem',
+                display: 'inline-flex',
+                padding: '0.75rem',
                 background: 'rgba(56, 189, 248, 0.1)',
                 border: '1px solid rgba(56, 189, 248, 0.3)',
-                borderRadius: '10px',
+                borderRadius: '14px',
                 color: '#38bdf8',
+                marginBottom: '1rem',
               }}>
-                <TestTube2 style={{ width: 20, height: 20 }} />
+                <TestTube2 style={{ width: 24, height: 24 }} />
               </div>
-              <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#f4f4f5', margin: 0 }}>Pipeline Tester</h2>
-            </div>
-            <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1.25rem', lineHeight: 1.5 }}>
-              Test your prompt chains by running images through specific Humor Flavors using the live generation API.
-            </p>
-            <Link
-              href="/test-pipeline"
-              style={{
-                display: 'block',
-                textAlign: 'center',
-                background: 'linear-gradient(135deg, #a855f7, #ec4899)',
+              <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#f4f4f5', margin: '0 0 0.5rem 0' }}>Pipeline Tester</h2>
+              <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1.25rem', lineHeight: 1.5 }}>
+                Run images through your prompt chains to generate captions.
+              </p>
+              <span style={{
+                display: 'inline-block',
+                background: 'linear-gradient(135deg, #38bdf8, #0ea5e9)',
                 color: '#fff',
-                padding: '0.75rem',
+                padding: '0.6rem 1.5rem',
                 borderRadius: '10px',
                 fontWeight: 600,
                 fontSize: '0.9rem',
-                textDecoration: 'none',
-              }}
-            >
-              Open Tester
-            </Link>
-          </div>
+              }}>
+                Open
+              </span>
+            </div>
+          </Link>
 
-          {/* Results Viewer */}
-          <div style={{
-            background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            borderRadius: '16px',
-            padding: '1.5rem',
-            transition: 'all 0.2s',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-              <div style={{
-                padding: '0.6rem',
-                background: 'rgba(16, 185, 129, 0.1)',
-                border: '1px solid rgba(16, 185, 129, 0.3)',
-                borderRadius: '10px',
-                color: '#10b981',
-              }}>
-                <MessageSquare style={{ width: 20, height: 20 }} />
+          {/* Captions Viewer — left-aligned compact card */}
+          <Link href="/captions" style={{ textDecoration: 'none' }}>
+            <div style={{
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(16, 185, 129, 0.25)',
+              borderRadius: '16px',
+              padding: '2rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              transition: 'all 0.2s',
+              height: '100%',
+            }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                  <div style={{
+                    padding: '0.6rem',
+                    background: 'rgba(16, 185, 129, 0.1)',
+                    border: '1px solid rgba(16, 185, 129, 0.3)',
+                    borderRadius: '10px',
+                    color: '#10b981',
+                  }}>
+                    <MessageSquare style={{ width: 20, height: 20 }} />
+                  </div>
+                  <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#f4f4f5', margin: 0 }}>Captions Viewer</h2>
+                </div>
+                <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1.25rem', lineHeight: 1.5 }}>
+                  Browse and filter all generated captions.
+                </p>
               </div>
-              <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#f4f4f5', margin: 0 }}>Captions Viewer</h2>
-            </div>
-            <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1.25rem', lineHeight: 1.5 }}>
-              Browse and review all captions generated by the system, filterable by specific Humor Flavors.
-            </p>
-            <Link
-              href="/captions"
-              style={{
+              <span style={{
                 display: 'block',
                 textAlign: 'center',
-                background: 'linear-gradient(135deg, #a855f7, #ec4899)',
+                background: 'linear-gradient(135deg, #10b981, #059669)',
                 color: '#fff',
-                padding: '0.75rem',
+                padding: '0.6rem 1.5rem',
                 borderRadius: '10px',
                 fontWeight: 600,
                 fontSize: '0.9rem',
-                textDecoration: 'none',
-              }}
-            >
-              View Captions
-            </Link>
-          </div>
+              }}>
+                Open
+              </span>
+            </div>
+          </Link>
+
         </div>
       </main>
     </div>
