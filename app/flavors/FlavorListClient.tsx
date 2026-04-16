@@ -42,10 +42,12 @@ export default function FlavorListClient({ initialFlavors }: { initialFlavors: F
     }
   };
 
-  const handleDuplicate = async (id: number) => {
-    if (!confirm('Are you sure you want to duplicate this flavor and all its steps?')) return;
+  const handleDuplicate = async (flavor: Flavor) => {
+    const requestedSlug = window.prompt('Name for the duplicated flavor:', flavor.slug);
+    if (requestedSlug === null || !requestedSlug.trim()) return;
+
     try {
-      const newFlavorId = await duplicateFlavor(id);
+      const newFlavorId = await duplicateFlavor(flavor.id, requestedSlug);
       router.push(`/flavors/${newFlavorId}`);
     } catch (e: any) {
       alert('Error: ' + e.message);
@@ -143,7 +145,7 @@ export default function FlavorListClient({ initialFlavors }: { initialFlavors: F
                 {flavor.slug}
               </h3>
               <div style={{ display: 'flex', gap: '0.25rem', flexShrink: 0 }}>
-                <button onClick={() => handleDuplicate(flavor.id)} title="Duplicate Flavor" style={{ background: 'none', border: 'none', padding: '0.35rem', cursor: 'pointer', color: '#71717a', borderRadius: '6px' }}>
+                <button onClick={() => handleDuplicate(flavor)} title="Duplicate Flavor" style={{ background: 'none', border: 'none', padding: '0.35rem', cursor: 'pointer', color: '#71717a', borderRadius: '6px' }}>
                   <Copy style={{ width: 15, height: 15 }} />
                 </button>
                 <button onClick={() => handleOpenEdit(flavor)} title="Edit Metadata" style={{ background: 'none', border: 'none', padding: '0.35rem', cursor: 'pointer', color: '#71717a', borderRadius: '6px' }}>

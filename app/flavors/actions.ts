@@ -43,9 +43,12 @@ export async function deleteFlavor(id: number) {
   revalidatePath('/flavors')
 }
 
-export async function duplicateFlavor(id: number) {
+export async function duplicateFlavor(id: number, requestedSlug: string) {
   const supabase = await createClient()
   const userId = await getCurrentUserId()
+  const baseSlug = requestedSlug.trim()
+
+  if (!baseSlug) throw new Error('A flavor name is required')
 
   const { data: originalFlavor, error: flavorError } = await supabase
     .from('humor_flavors')
@@ -55,25 +58,28 @@ export async function duplicateFlavor(id: number) {
 
   if (flavorError || !originalFlavor) throw new Error("Could not find original flavor")
 
-  let newSlug = `${originalFlavor.slug}-copy`
-  let counter = 1
-  let isUnique = false
+  let newSlug = baseSlug
+  let counter = 2
 
-  while (!isUnique) {
-    const { data: existing } = await supabase.from('humor_flavors').select('id').eq('slug', newSlug).single()
-    if (existing) {
-      newSlug = `${originalFlavor.slug}-copy-${counter}`
-      counter++
-    } else {
-      isUnique = true
-    }
+  while (true) {
+    const { data: existing, error: existingError } = await supabase
+      .from('humor_flavors')
+      .select('id')
+      .eq('slug', newSlug)
+      .maybeSingle()
+
+    if (existingError) throw new Error('Failed to validate flavor name')
+    if (!existing) break
+
+    newSlug = `${baseSlug}-${counter}`
+    counter++
   }
 
   const { data: newFlavor, error: insertError } = await supabase
     .from('humor_flavors')
     .insert({
       slug: newSlug,
-      description: originalFlavor.description ? `${originalFlavor.description} (Copy)` : 'Copy',
+      description: originalFlavor.description,
       created_by_user_id: userId,
       modified_by_user_id: userId,
     })
